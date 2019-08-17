@@ -1,10 +1,9 @@
 package algorithms.course1.week2;
 
+import algorithms.course1.util.AssignmentInputReader;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -43,20 +42,8 @@ class InversionCounterTest {
 
     @Test
     void assignment() throws FileNotFoundException {
-        int[] input = readInput("week2_problem_set.txt", 100000);
+        int[] input = new AssignmentInputReader().readArrayInput("course1/week2/week2_problem_set.txt", 100000);
         System.out.println(InversionCounter.countInversions(input));
     }
 
-    private int[] readInput(String filename, int size) throws FileNotFoundException {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(filename).getFile());
-        Scanner scanner = new Scanner(file);
-        int[] input = new int[size];
-        int i = 0;
-        while (scanner.hasNextInt()) {
-            input[i++] = scanner.nextInt();
-        }
-        System.out.println("Read input: [" + input[0] + ", ..., " + input[input.length - 1] + "]");
-        return input;
-    }
 }
