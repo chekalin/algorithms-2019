@@ -85,7 +85,7 @@ class QuickSortTest {
 
     @Test
     void testLargeSet() throws FileNotFoundException {
-        int[] input = new AssignmentInputReader().readArrayInput("course1.week3/week3_test_problem_set.txt.txt", 100000);
+        int[] input = new AssignmentInputReader().readArrayInput("course1/week3/week3_test_problem_set.txt.txt", 100000);
         verifyForPivotStrategy(PivotStrategy.FIRST, copy(input), 2127173);
         verifyForPivotStrategy(PivotStrategy.LAST, copy(input), 2079088);
         verifyForPivotStrategy(PivotStrategy.MEDIAN, copy(input), 1749103);
@@ -93,7 +93,7 @@ class QuickSortTest {
 
     @Test
     void testWithProblemSet() throws FileNotFoundException {
-        int[] input = new AssignmentInputReader().readArrayInput("course1.week3/week3_problem_set.txt", 10000);
+        int[] input = new AssignmentInputReader().readArrayInput("course1/week3/week3_problem_set.txt", 10000);
         long comparisonsWithFirst = QuickSort.sort(copy(input), PivotStrategy.FIRST);
         System.out.println("comparisonsWithFirst = " + comparisonsWithFirst);
         long comparisonsWithLast = QuickSort.sort(copy(input), PivotStrategy.LAST);
