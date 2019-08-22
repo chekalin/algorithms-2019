@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public class Graph {
 
-    List<Edge> edges = new ArrayList<>();
-    List<Vertex> vertices = new ArrayList<>();
+    private List<Edge> edges = new ArrayList<>();
+    private List<Vertex> vertices = new ArrayList<>();
 
-    void addVertex(String edge1id, String edge2id) {
+    public void addVertex(String edge1id, String edge2id) {
         Edge edge1 = findOrAddEdge(edge1id);
         Edge edge2 = findOrAddEdge(edge2id);
         Vertex vertex = new Vertex(edge1, edge2);
@@ -19,7 +19,11 @@ public class Graph {
         vertices.add(vertex);
     }
 
-    boolean isConnected(String edge1id, String edge2id) {
+    public int numberOfEdges() {
+        return edges.size();
+    }
+
+    public boolean isConnected(String edge1id, String edge2id) {
         Optional<Edge> edge1 = findEdge(edge1id);
         Optional<Edge> edge2 = findEdge(edge2id);
         return edge1.isPresent()
@@ -29,10 +33,10 @@ public class Graph {
 
     private Edge findOrAddEdge(String id) {
         return findEdge(id).orElseGet(() -> {
-                    Edge newEdge = new Edge(id);
-                    edges.add(newEdge);
-                    return newEdge;
-                });
+            Edge newEdge = new Edge(id);
+            edges.add(newEdge);
+            return newEdge;
+        });
     }
 
     private Optional<Edge> findEdge(String id) {
@@ -47,6 +51,10 @@ public class Graph {
                 "edges=" + edges +
                 ", vertices=" + vertices +
                 '}';
+    }
+
+    public int numberOfVertices() {
+        return vertices.size();
     }
 
     public static class Edge {
