@@ -20,11 +20,11 @@ public class AssignmentInputReader {
         return input;
     }
 
-    public static Graph readGraph(String filename) throws FileNotFoundException {
+    public static Graph readGraph(String filename, String separator) throws FileNotFoundException {
         Scanner scanner = getScanner(filename);
         Graph graph = new Graph();
         while (scanner.hasNextLine()) {
-            String[] ids = scanner.nextLine().split("\t");
+            String[] ids = scanner.nextLine().split(separator);
             String edge1Id = ids[0];
             for (int i = 1; i < ids.length; i++) {
                 String edge2Id = ids[i];
