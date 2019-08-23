@@ -57,6 +57,12 @@ public class Graph {
         return vertices.size();
     }
 
+    Graph deepCopy() {
+        Graph newGraph = new Graph();
+        this.vertices.forEach(v -> newGraph.addVertex(v.edge1.id, v.edge2.id));
+        return newGraph;
+    }
+
     public static class Edge {
         String id;
         List<Vertex> vertices = new ArrayList<>();
@@ -103,6 +109,20 @@ public class Graph {
         boolean connects(Edge e1, Edge e2) {
             return edge1.equals(e1) && edge2.equals(e2)
                     || (edge2.equals(e1) && edge1.equals(e2));
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Vertex vertex = (Vertex) o;
+            return Objects.equals(edge1, vertex.edge1) &&
+                    Objects.equals(edge2, vertex.edge2);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(edge1, edge2);
         }
 
         @Override
