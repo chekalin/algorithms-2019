@@ -1,6 +1,6 @@
 package algorithms.course1.week2;
 
-import algorithms.course1.util.AssignmentInputReader;
+import algorithms.util.AssignmentInputReader;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -42,7 +42,7 @@ class InversionCounterTest {
 
     @Test
     void assignment() throws FileNotFoundException {
-        int[] input = new AssignmentInputReader().readArrayInput("course1/week2/week2_problem_set.txt", 100000);
+        int[] input = AssignmentInputReader.readArrayInput("course1/week2/week2_problem_set.txt", 100000);
         System.out.println(InversionCounter.countInversions(input));
     }
 

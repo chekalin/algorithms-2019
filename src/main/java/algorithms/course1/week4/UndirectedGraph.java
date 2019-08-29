@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Graph {
+public class UndirectedGraph {
 
     static boolean DEBUG = false;
 
@@ -50,7 +50,7 @@ public class Graph {
         int minCut = Integer.MAX_VALUE;
         for (int i = 0; i < iterations; i++) {
             if (DEBUG) System.out.println("Iteration " + i + "/" + iterations);
-            Graph copy = this.deepCopy();
+            UndirectedGraph copy = this.deepCopy();
             while (copy.numberOfEdges() > 2) {
                 if(DEBUG) System.out.println("before contracting = " + copy);
                 copy.contractRandomVertex();
@@ -77,8 +77,8 @@ public class Graph {
         return vertices.size();
     }
 
-    Graph deepCopy() {
-        Graph newGraph = new Graph();
+    UndirectedGraph deepCopy() {
+        UndirectedGraph newGraph = new UndirectedGraph();
         this.vertices.forEach(v -> newGraph.addVertex(v.edge1.id, v.edge2.id));
         return newGraph;
     }

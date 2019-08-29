@@ -1,6 +1,6 @@
-package algorithms.course1.util;
+package algorithms.util;
 
-import algorithms.course1.week4.Graph;
+import algorithms.course1.week4.UndirectedGraph;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,9 +20,9 @@ public class AssignmentInputReader {
         return input;
     }
 
-    public static Graph readGraph(String filename, String separator) throws FileNotFoundException {
+    public static UndirectedGraph readGraph(String filename, String separator) throws FileNotFoundException {
         Scanner scanner = getScanner(filename);
-        Graph graph = new Graph();
+        UndirectedGraph graph = new UndirectedGraph();
         while (scanner.hasNextLine()) {
             String[] ids = scanner.nextLine().split(separator);
             String edge1Id = ids[0];
@@ -37,7 +37,7 @@ public class AssignmentInputReader {
         return graph;
     }
 
-    private static Scanner getScanner(String filename) throws FileNotFoundException {
+    public static Scanner getScanner(String filename) throws FileNotFoundException {
         ClassLoader classLoader = AssignmentInputReader.class.getClassLoader();
         URL resourceUrl = classLoader.getResource(filename);
         assert resourceUrl != null;

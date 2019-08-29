@@ -1,24 +1,24 @@
 package algorithms.course1.week4;
 
-import algorithms.course1.util.AssignmentInputReader;
-import jdk.nashorn.internal.ir.annotations.Ignore;
+import algorithms.util.AssignmentInputReader;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GraphTest {
+class UndirectedGraphTest {
 
     @AfterEach
     void tearDown() {
-        Graph.DEBUG = false;
+        UndirectedGraph.DEBUG = false;
     }
 
     @Test
     void createsGraph() {
-        Graph graph = new Graph();
+        UndirectedGraph graph = new UndirectedGraph();
         graph.addVertex("A", "B");
 
         assertThat(graph.numberOfEdges()).isEqualTo(2);
@@ -28,10 +28,10 @@ class GraphTest {
 
     @Test
     void makesADeepCopyOfTheGraph() {
-        Graph original = new Graph();
+        UndirectedGraph original = new UndirectedGraph();
         original.addVertex("A", "B");
 
-        Graph copy = original.deepCopy();
+        UndirectedGraph copy = original.deepCopy();
         copy.addVertex("B", "C");
 
         assertThat(original.numberOfEdges()).isEqualTo(2);
@@ -46,7 +46,7 @@ class GraphTest {
 
     @Test
     void contractsVertex() {
-        Graph graph = new Graph();
+        UndirectedGraph graph = new UndirectedGraph();
         graph.addVertex("A", "B");
         graph.addVertex("B", "C");
 
@@ -58,7 +58,7 @@ class GraphTest {
 
     @Test
     void contractsVertexMaintainingMultipleVertexesBetweenEdges() {
-        Graph graph = new Graph();
+        UndirectedGraph graph = new UndirectedGraph();
         graph.addVertex("A", "B");
         graph.addVertex("A", "C");
 
@@ -70,7 +70,7 @@ class GraphTest {
 
     @Test
     void contractsRandomVertex() {
-        Graph graph = new Graph();
+        UndirectedGraph graph = new UndirectedGraph();
         graph.addVertex("A", "B");
         graph.addVertex("B", "C");
         graph.addVertex("C", "D");
@@ -84,14 +84,14 @@ class GraphTest {
 
     @Test
     void readsGraphFromAFile() throws FileNotFoundException {
-        Graph graph = AssignmentInputReader.readGraph("course1/week4/week4_problem_set.txt", "\t");
+        UndirectedGraph graph = AssignmentInputReader.readGraph("course1/week4/week4_problem_set.txt", "\t");
         assertThat(graph.numberOfEdges()).isEqualTo(200);
         assertThat(graph.numberOfVertices()).isEqualTo(2517);
     }
 
     @Test
     void minCutOfTree() {
-        Graph graph = new Graph();
+        UndirectedGraph graph = new UndirectedGraph();
         graph.addVertex("A", "B");
         graph.addVertex("B", "C");
         graph.addVertex("B", "D");
@@ -102,7 +102,7 @@ class GraphTest {
 
     @Test
     void minCutOfCycle() {
-        Graph graph = new Graph();
+        UndirectedGraph graph = new UndirectedGraph();
         graph.addVertex("A", "B");
         graph.addVertex("B", "C");
         graph.addVertex("C", "D");
@@ -121,7 +121,7 @@ class GraphTest {
          * cut is either 3 or 2
          * */
 
-        Graph graph = new Graph();
+        UndirectedGraph graph = new UndirectedGraph();
         graph.addVertex("A", "B");
         graph.addVertex("B", "C");
         graph.addVertex("C", "D");
@@ -134,29 +134,29 @@ class GraphTest {
 
     @Test
     void testCase_1_6() throws FileNotFoundException {
-        Graph graph = AssignmentInputReader.readGraph("course1/week4/input_random_1_6.txt", " ");
+        UndirectedGraph graph = AssignmentInputReader.readGraph("course1/week4/input_random_1_6.txt", " ");
         int minCut = graph.findMinCut(10);
         assertThat(minCut).isEqualTo(2);
     }
 
     @Test
     void testCase_4_6() throws FileNotFoundException {
-        Graph graph = AssignmentInputReader.readGraph("course1/week4/input_random_4_6.txt", " ");
+        UndirectedGraph graph = AssignmentInputReader.readGraph("course1/week4/input_random_4_6.txt", " ");
         int minCut = graph.findMinCut(10);
         assertThat(minCut).isEqualTo(4);
     }
 
     @Test
-    @Ignore // slow
+    @Disabled("slow")
     void testCase_40_200() throws FileNotFoundException {
-        Graph graph = AssignmentInputReader.readGraph("course1/week4/input_random_40_200.txt", " ");
+        UndirectedGraph graph = AssignmentInputReader.readGraph("course1/week4/input_random_40_200.txt", " ");
         int minCut = graph.findMinCut(100);
         assertThat(minCut).isEqualTo(61);
     }
 
     @Test
     void assignment() throws FileNotFoundException {
-        Graph graph = AssignmentInputReader.readGraph("course1/week4/week4_problem_set.txt", "\t");
+        UndirectedGraph graph = AssignmentInputReader.readGraph("course1/week4/week4_problem_set.txt", "\t");
         int minCut = graph.findMinCut(100);
         assertThat(minCut).isEqualTo(17);
     }
