@@ -1,7 +1,5 @@
 package algorithms.course2.week1;
 
-import org.assertj.core.util.Sets;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,7 +9,8 @@ class StronglyConnectedComponents {
         private Map<String, List<String>> edges = new HashMap<>();
 
         void addEdge(String edge1, String edge2) {
-            edges.putIfAbsent(edge1, new ArrayList<>());
+            edges.putIfAbsent(edge1, new LinkedList<>());
+            edges.putIfAbsent(edge2, new LinkedList<>());
             edges.get(edge1).add(edge2);
         }
 
@@ -23,11 +22,30 @@ class StronglyConnectedComponents {
             return edges.values().stream().map(List::size).reduce(0, Integer::sum);
         }
 
+        Map<String, Integer> topologicalSort() {
+            Map<String, Integer> edgeOrders = new HashMap<>();
+            Set<String> explored = new HashSet<>();
+            for (String edge : edges.keySet()) {
+                if (!explored.contains(edge)) {
+                    depthFirstSearchTopologicalSort(edge, numberOfEdges(), explored, edgeOrders);
+                }
+            }
+            return edgeOrders;
+        }
+
+        private Integer depthFirstSearchTopologicalSort(String edge, Integer maxLabel, Set<String> explored, Map<String, Integer> edgeOrders) {
+            explored.add(edge);
+            for (String adjacent : edges.get(edge)) {
+                if (!explored.contains(adjacent)) {
+                    maxLabel = depthFirstSearchTopologicalSort(adjacent, maxLabel, explored, edgeOrders);
+                }
+            }
+            edgeOrders.put(edge, maxLabel);
+            return maxLabel - 1;
+        }
+
         Set<Set<String>> getStronglyConnectedComponents() {
-            Set<Set<String>> components = new HashSet<>();
-            components.add(edges.keySet());
-            components.add(edges.values().stream().flatMap(Collection::stream).collect(Collectors.toSet()));
-            return components;
+            return edges.keySet().stream().map(Set::of).collect(Collectors.toSet());
         }
     }
 }
