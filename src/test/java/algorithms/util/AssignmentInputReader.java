@@ -1,6 +1,7 @@
 package algorithms.util;
 
 import algorithms.course1.week4.UndirectedGraph;
+import algorithms.course2.week1.StronglyConnectedComponents;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,11 +38,22 @@ public class AssignmentInputReader {
         return graph;
     }
 
-    public static Scanner getScanner(String filename) throws FileNotFoundException {
+    private static Scanner getScanner(String filename) throws FileNotFoundException {
         ClassLoader classLoader = AssignmentInputReader.class.getClassLoader();
         URL resourceUrl = classLoader.getResource(filename);
         assert resourceUrl != null;
         File file = new File(resourceUrl.getFile());
         return new Scanner(file);
+    }
+
+    public static StronglyConnectedComponents.DirectedGraph readDirectedGraph(String filename) throws FileNotFoundException {
+        Scanner scanner = getScanner(filename);
+        StronglyConnectedComponents.DirectedGraph graph = new StronglyConnectedComponents.DirectedGraph();
+        while (scanner.hasNextLine()) {
+            String[] edge = scanner.nextLine().split(" ");
+            graph.addEdge(edge[0], edge[1]);
+        }
+        System.out.println("Read graph with " + graph.numberOfEdges() + " edges and " + graph.numberOfVertices() + " vertices");
+        return graph;
     }
 }

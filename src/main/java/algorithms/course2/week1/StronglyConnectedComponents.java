@@ -3,31 +3,32 @@ package algorithms.course2.week1;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class StronglyConnectedComponents {
-    static class DirectedGraph {
+public class StronglyConnectedComponents {
+    public static class DirectedGraph {
 
         private Map<String, List<String>> edges = new HashMap<>();
 
-        void addEdge(String edge1, String edge2) {
+        public void addEdge(String edge1, String edge2) {
             edges.putIfAbsent(edge1, new LinkedList<>());
             edges.putIfAbsent(edge2, new LinkedList<>());
             edges.get(edge1).add(edge2);
         }
 
-        int numberOfEdges() {
+        public int numberOfEdges() {
             return edges.size();
         }
 
-        int numberOfVertices() {
+        public int numberOfVertices() {
             return edges.values().stream().map(List::size).reduce(0, Integer::sum);
         }
 
         Map<String, Integer> topologicalSort() {
             Map<String, Integer> edgeOrders = new HashMap<>();
             Set<String> explored = new HashSet<>();
+            int maxLabel = numberOfEdges();
             for (String edge : edges.keySet()) {
                 if (!explored.contains(edge)) {
-                    depthFirstSearchTopologicalSort(edge, numberOfEdges(), explored, edgeOrders);
+                    maxLabel = depthFirstSearchTopologicalSort(edge, maxLabel, explored, edgeOrders);
                 }
             }
             return edgeOrders;
@@ -44,8 +45,42 @@ class StronglyConnectedComponents {
             return maxLabel - 1;
         }
 
+        DirectedGraph reversed() {
+            DirectedGraph reversed = new DirectedGraph();
+            for (Map.Entry<String, List<String>> entry : edges.entrySet()) {
+                String edge = entry.getKey();
+                for (String adjacent : entry.getValue()) {
+                    reversed.addEdge(adjacent, edge);
+                }
+            }
+            return reversed;
+        }
+
         Set<Set<String>> getStronglyConnectedComponents() {
-            return edges.keySet().stream().map(Set::of).collect(Collectors.toSet());
+            DirectedGraph reversed = this.reversed();
+            Map<String, Integer> orders = reversed.topologicalSort();
+            List<String> sortedEdges = edges.keySet().stream().sorted(Comparator.comparing(orders::get)).collect(Collectors.toList());
+            Set<String> explored = new HashSet<>();
+            Set<Set<String>> connectedComponents = new HashSet<>();
+            for (String edge : sortedEdges) {
+                if (!explored.contains(edge)) {
+                    HashSet<String> connectedComponent = new HashSet<>();
+                    dfsScc(edge, explored, connectedComponent);
+                    connectedComponents.add(connectedComponent);
+                }
+            }
+            return connectedComponents;
+        }
+
+        private void dfsScc(String edge, Set<String> explored, Set<String> connectedComponent) {
+            explored.add(edge);
+            connectedComponent.add(edge);
+            List<String> vertices = edges.get(edge);
+            for (String vertex : vertices) {
+                if (!explored.contains(vertex)) {
+                    dfsScc(vertex, explored, connectedComponent);
+                }
+            }
         }
     }
 }
