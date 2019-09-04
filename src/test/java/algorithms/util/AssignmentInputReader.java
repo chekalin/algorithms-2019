@@ -2,6 +2,7 @@ package algorithms.util;
 
 import algorithms.course1.week4.UndirectedGraph;
 import algorithms.course2.week1.StronglyConnectedComponents;
+import algorithms.course2.week2.ShortestPath;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -56,4 +57,20 @@ public class AssignmentInputReader {
         System.out.println("Read graph with " + graph.numberOfEdges() + " edges and " + graph.numberOfVertices() + " vertices");
         return graph;
     }
+
+    public static ShortestPath.WeightedGraph readWeightedGraph(String filename) throws FileNotFoundException {
+        Scanner scanner = AssignmentInputReader.getScanner(filename);
+        ShortestPath.WeightedGraph graph = new ShortestPath.WeightedGraph();
+        while (scanner.hasNextLine()) {
+            String[] line = scanner.nextLine().split("\t");
+            String vertexFrom = line[0];
+            for (int i = 1; i < line.length; i++) {
+                String[] vertexToAndWeight = line[i].split(",");
+                graph.addEdge(vertexFrom, vertexToAndWeight[0], Integer.parseInt(vertexToAndWeight[1]));
+            }
+        }
+        System.out.println("Read input graph with " + graph.numberOfEdges() + " edges and " + graph.numberOfVertices() + " vertices");
+        return graph;
+    }
+
 }
