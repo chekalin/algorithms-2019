@@ -75,6 +75,10 @@ class Heap {
         return min;
     }
 
+    int peek() {
+        return heap[0];
+    }
+
     private boolean greaterThan(int value1, int value2) {
         return comparator.compare(value1, value2) > 0;
     }

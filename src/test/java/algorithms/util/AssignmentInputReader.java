@@ -39,7 +39,7 @@ public class AssignmentInputReader {
         return graph;
     }
 
-    private static Scanner getScanner(String filename) throws FileNotFoundException {
+    public static Scanner getScanner(String filename) throws FileNotFoundException {
         ClassLoader classLoader = AssignmentInputReader.class.getClassLoader();
         URL resourceUrl = classLoader.getResource(filename);
         assert resourceUrl != null;
