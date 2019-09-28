@@ -26,6 +26,11 @@
     </build>
     <dependencies>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>28.1-jre</version>
+        </dependency>
+        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <version>5.5.1</version>
@@ -35,8 +40,8 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.13.0</version>
+            <scope>test</scope>
         </dependency>
-
     </dependencies>
 
 </project>
