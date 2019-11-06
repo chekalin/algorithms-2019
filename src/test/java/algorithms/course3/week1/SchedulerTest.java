@@ -19,12 +19,12 @@ class SchedulerTest {
             .reversed();
 
     private static Comparator<Job> weightLengthRatioComparator = Comparator
-            .comparingDouble((ToDoubleFunction<Job>) job -> job.weight / job.length)
+            .comparingDouble((ToDoubleFunction<Job>) job -> (double) job.weight / job.length)
             .thenComparingInt(value -> value.weight)
             .reversed();
 
     @Test
-    void readInput() throws FileNotFoundException {
+    void assignment() throws FileNotFoundException {
         List<Job> schedule = readJobs("course3/week1/problem_set_1.txt");
 
         schedule.sort(weightLengthDifferenceComparator);
@@ -45,17 +45,26 @@ class SchedulerTest {
         assertThat(getWeightedCompletionTimes(schedule)).isEqualTo(72468);
     }
 
-    private int getWeightedCompletionTimes(List<Job> schedule) {
-        List<Integer> completionTimes = new ArrayList<>(schedule.size());
-        completionTimes.add(schedule.get(0).length);
+    @Test
+    void testCase_2_10() throws FileNotFoundException {
+        List<Job> schedule = readJobs("course3/week1/input_random_2_10.txt");
+
+        schedule.sort(weightLengthRatioComparator);
+
+        assertThat(getWeightedCompletionTimes(schedule)).isEqualTo(124380);
+    }
+
+    private long getWeightedCompletionTimes(List<Job> schedule) {
+        List<Long> completionTimes = new ArrayList<>(schedule.size());
+        completionTimes.add((long) schedule.get(0).length);
         for (int i = 1; i < schedule.size(); i++) {
             int length = schedule.get(i).length;
-            Integer previousCompletionTime = completionTimes.get(i - 1);
+            Long previousCompletionTime = completionTimes.get(i - 1);
             completionTimes.add(length + previousCompletionTime);
         }
-        return IntStream.range(0, schedule.size()).map(i -> {
-            int weight = schedule.get(i).weight;
-            Integer completionTime = completionTimes.get(i);
+        return IntStream.range(0, schedule.size()).mapToLong(i -> {
+            long weight = schedule.get(i).weight;
+            long completionTime = completionTimes.get(i);
             return weight * completionTime;
         }).sum();
     }
