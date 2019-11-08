@@ -6,15 +6,16 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
+import static algorithms.course3.week1.MinimumSpanningTree.findMinimumSpanningTree;
 import static algorithms.util.AssignmentInputReader.getScanner;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UndirectedWeightedGraphTest {
+class MinimumSpanningTreeTest {
 
     @Test
     void assignment() throws FileNotFoundException {
         UndirectedWeightedGraph graph = readGraph("course3/week1/problem_set_2.txt");
-        List<UndirectedWeightedGraph.Edge> minimumSpanningTree = graph.findMinimumSpanningTree();
+        List<UndirectedWeightedGraph.Edge> minimumSpanningTree = findMinimumSpanningTree(graph);
         long totalWeight = minimumSpanningTree.stream().map(UndirectedWeightedGraph.Edge::getWeight).mapToLong(Long::valueOf).sum();
         System.out.println("totalWeight = " + totalWeight);
     }
@@ -22,7 +23,7 @@ class UndirectedWeightedGraphTest {
     @Test
     void input_random_1_10_question_3() throws FileNotFoundException {
         UndirectedWeightedGraph graph = readGraph("course3/week1/input_random_1_10_question_3.txt");
-        List<UndirectedWeightedGraph.Edge> minimumSpanningTree = graph.findMinimumSpanningTree();
+        List<UndirectedWeightedGraph.Edge> minimumSpanningTree = findMinimumSpanningTree(graph);
         long totalWeight = minimumSpanningTree.stream().map(UndirectedWeightedGraph.Edge::getWeight).mapToLong(Long::valueOf).sum();
         assertThat(totalWeight).isEqualTo(-7430);
     }

@@ -32,4 +32,31 @@ class UnionFindTest {
 
         assertThat(unionFind.find("c")).isNotEqualTo("c");
     }
+
+    @Test
+    void doesNothingWhenTryingToUnionElementsFromSameSet() {
+        HashMapUnionFind unionFind = new HashMapUnionFind(List.of("a", "b", "c"));
+
+        unionFind.union("a", "b");
+        unionFind.union("b", "c");
+        // both a and c are already connected via b
+        unionFind.union("a", "c");
+
+        assertThat(unionFind.numberOfSets()).isEqualTo(1);
+    }
+
+    @Test
+    void numberOfSetsReturnsNumberOfElementsAfterInit() {
+        HashMapUnionFind unionFind = new HashMapUnionFind(List.of("a", "b", "c"));
+        assertThat(unionFind.numberOfSets()).isEqualTo(3);
+    }
+
+    @Test
+    void numberOfSetsReturnsLessSetsAfterUnion() {
+        HashMapUnionFind unionFind = new HashMapUnionFind(List.of("a", "b", "c"));
+
+        unionFind.union("a", "b");
+
+        assertThat(unionFind.numberOfSets()).isEqualTo(2);
+    }
 }

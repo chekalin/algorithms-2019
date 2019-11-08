@@ -1,55 +1,40 @@
 package algorithms.course3.week1;
 
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-class UndirectedWeightedGraph {
+public class UndirectedWeightedGraph {
 
     private List<Edge> edges;
     private Set<String> vertices;
 
-    UndirectedWeightedGraph(int expectedNumberOfVertices, int expectedNumberOfEdges) {
+    public UndirectedWeightedGraph(int expectedNumberOfVertices, int expectedNumberOfEdges) {
         this.edges = new ArrayList<>(expectedNumberOfEdges);
         this.vertices = new HashSet<>(expectedNumberOfVertices);
     }
 
-    void addEdge(String vertex1, String vertex2, int weight) {
+    public void addEdge(String vertex1, String vertex2, int weight) {
         vertices.add(vertex1);
         vertices.add(vertex2);
         edges.add(new Edge(vertex1, vertex2, weight));
     }
 
-    int numberOfVertices() {
+    public int numberOfVertices() {
         return vertices.size();
     }
 
-    int numberOfEdges() {
+    public int numberOfEdges() {
         return edges.size();
     }
 
-    List<Edge> findMinimumSpanningTree() {
-        Set<String> processedVertices = new HashSet<>();
-        List<Edge> minimumSpanningTree = new ArrayList<>();
-        for (String vertex : vertices) {
-            if (processedVertices.isEmpty()) {
-                processedVertices.add(vertex);
-            } else {
-                Optional<Edge> optionalMinWeightEdgeCrossingFrontier = edges.stream()
-                        .filter(crossesFrontier(processedVertices))
-                        .min(Comparator.comparingInt(Edge::getWeight));
-                if (optionalMinWeightEdgeCrossingFrontier.isEmpty()) break;
-                Edge minWeightEdgeCrossingFrontier = optionalMinWeightEdgeCrossingFrontier.get();
-                minimumSpanningTree.add(minWeightEdgeCrossingFrontier);
-                processedVertices.add(minWeightEdgeCrossingFrontier.vertex1);
-                processedVertices.add(minWeightEdgeCrossingFrontier.vertex2);
-            }
-        }
-        return minimumSpanningTree;
+    public Set<String> getVertices() {
+        return vertices;
     }
 
-    private Predicate<Edge> crossesFrontier(Set<String> processedVertices) {
-        return edge -> (processedVertices.contains(edge.vertex1) && !processedVertices.contains(edge.vertex2))
-                || (processedVertices.contains(edge.vertex2) && !processedVertices.contains(edge.vertex1));
+    public List<Edge> getEdges() {
+        return edges;
     }
 
     public static class Edge {
@@ -63,7 +48,15 @@ class UndirectedWeightedGraph {
             this.weight = weight;
         }
 
-        int getWeight() {
+        public String getVertex1() {
+            return vertex1;
+        }
+
+        public String getVertex2() {
+            return vertex2;
+        }
+
+        public int getWeight() {
             return weight;
         }
 

@@ -1,6 +1,6 @@
 package algorithms.course3.week2;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -13,13 +13,21 @@ public interface UnionFind {
 
     void union(String element1, String element2);
 
+    int numberOfSets();
+
+    static UnionFind of(Collection<String> initialElements) {
+        return new HashMapUnionFind(initialElements);
+    }
+
     class HashMapUnionFind implements UnionFind {
 
         private final Map<String, Element> elements;
+        private int numberOfSets;
 
-        HashMapUnionFind(List<String> initialElements) {
-            elements = initialElements.stream()
+        HashMapUnionFind(Collection<String> initialElements) {
+            this.elements = initialElements.stream()
                     .collect(Collectors.toMap(identity(), Element::new));
+            this.numberOfSets = initialElements.size();
         }
 
         @Override
@@ -34,8 +42,15 @@ public interface UnionFind {
 
         @Override
         public void union(String element1, String element2) {
-            Element e1 = elements.get(find(element1));
-            Element e2 = elements.get(find(element2));
+            String parent1 = find(element1);
+            String parent2 = find(element2);
+            if (parent1.equals(parent2)) {
+                // Do nothing, elements are already part of the same set
+                return;
+            }
+
+            Element e1 = elements.get(parent1);
+            Element e2 = elements.get(parent2);
             if (e1.size > e2.size) {
                 e2.parent = e1.id;
                 e1.size += e2.size;
@@ -43,6 +58,12 @@ public interface UnionFind {
                 e1.parent = e2.id;
                 e2.size += e1.size;
             }
+            numberOfSets--;
+        }
+
+        @Override
+        public int numberOfSets() {
+            return numberOfSets;
         }
 
         static class Element {
