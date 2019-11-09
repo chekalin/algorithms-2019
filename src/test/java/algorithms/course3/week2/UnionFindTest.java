@@ -13,19 +13,19 @@ class UnionFindTest {
 
     @Test
     void findThrowsExceptionWhenNoSuchElement() {
-        HashMapUnionFind emptyUnionFind = new HashMapUnionFind(List.of());
+        HashMapUnionFind<String> emptyUnionFind = new HashMapUnionFind<>(List.of());
         assertThrows(NoSuchElementException.class, () -> emptyUnionFind.find("a"));
     }
 
     @Test
     void findReturnsSameElementAfterInitialization() {
-        HashMapUnionFind unionFind = new HashMapUnionFind(List.of("a"));
+        HashMapUnionFind<String> unionFind = new HashMapUnionFind<>(List.of("a"));
         assertThat(unionFind.find("a")).isEqualTo("a");
     }
 
     @Test
     void unionsIntoLargerSet() {
-        HashMapUnionFind unionFind = new HashMapUnionFind(List.of("a", "b", "c"));
+        HashMapUnionFind<String> unionFind = new HashMapUnionFind<>(List.of("a", "b", "c"));
 
         unionFind.union("a", "b");
         unionFind.union("a", "c");
@@ -35,7 +35,7 @@ class UnionFindTest {
 
     @Test
     void doesNothingWhenTryingToUnionElementsFromSameSet() {
-        HashMapUnionFind unionFind = new HashMapUnionFind(List.of("a", "b", "c"));
+        HashMapUnionFind<String> unionFind = new HashMapUnionFind<>(List.of("a", "b", "c"));
 
         unionFind.union("a", "b");
         unionFind.union("b", "c");
@@ -47,13 +47,13 @@ class UnionFindTest {
 
     @Test
     void numberOfSetsReturnsNumberOfElementsAfterInit() {
-        HashMapUnionFind unionFind = new HashMapUnionFind(List.of("a", "b", "c"));
+        HashMapUnionFind<String> unionFind = new HashMapUnionFind<>(List.of("a", "b", "c"));
         assertThat(unionFind.numberOfSets()).isEqualTo(3);
     }
 
     @Test
     void numberOfSetsReturnsLessSetsAfterUnion() {
-        HashMapUnionFind unionFind = new HashMapUnionFind(List.of("a", "b", "c"));
+        HashMapUnionFind<String> unionFind = new HashMapUnionFind<>(List.of("a", "b", "c"));
 
         unionFind.union("a", "b");
 

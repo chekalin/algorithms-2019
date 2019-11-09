@@ -7,32 +7,32 @@ import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
 
-public interface UnionFind {
+public interface UnionFind<T> {
 
-    String find(String element);
+    T find(T element);
 
-    void union(String element1, String element2);
+    void union(T element1, T element2);
 
     int numberOfSets();
 
-    static UnionFind of(Collection<String> initialElements) {
-        return new HashMapUnionFind(initialElements);
+    static <T> UnionFind<T> of(Collection<T> initialElements) {
+        return new HashMapUnionFind<>(initialElements);
     }
 
-    class HashMapUnionFind implements UnionFind {
+    class HashMapUnionFind<T> implements UnionFind<T> {
 
-        private final Map<String, Element> elements;
+        private final Map<T, Element<T>> elements;
         private int numberOfSets;
 
-        HashMapUnionFind(Collection<String> initialElements) {
+        HashMapUnionFind(Collection<T> initialElements) {
             this.elements = initialElements.stream()
                     .collect(Collectors.toMap(identity(), Element::new));
             this.numberOfSets = initialElements.size();
         }
 
         @Override
-        public String find(String element) {
-            Element current = elements.get(element);
+        public T find(T element) {
+            Element<T> current = elements.get(element);
             if (current == null) throw new NoSuchElementException();
             while (!current.isRoot()) {
                 current = elements.get(current.parent);
@@ -41,9 +41,9 @@ public interface UnionFind {
         }
 
         @Override
-        public void union(String element1, String element2) {
-            String parent1 = find(element1);
-            String parent2 = find(element2);
+        public void union(T element1, T element2) {
+            T parent1 = find(element1);
+            T parent2 = find(element2);
             if (parent1.equals(parent2)) {
                 // Do nothing, elements are already part of the same set
                 return;
@@ -66,12 +66,12 @@ public interface UnionFind {
             return numberOfSets;
         }
 
-        static class Element {
-            String id;
-            String parent;
+        static class Element<T> {
+            T id;
+            T parent;
             int size;
 
-            Element(String id) {
+            Element(T id) {
                 this.id = id;
                 this.parent = id;
                 this.size = 1;
