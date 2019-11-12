@@ -14,19 +14,29 @@ class HuffmanTree {
     private long weight;
 
     static HuffmanTree createFromSymbolWeights(int[] symbolWeights) {
-        LinkedList<HuffmanTree> symbols =
-                IntStream.range(0, symbolWeights.length)
-                        .mapToObj(i -> leafNode(i, symbolWeights[i]))
-                        .sorted(Comparator.comparingLong(HuffmanTree::getWeight))
-                        .collect(Collectors.toCollection(LinkedList::new));
+        LinkedList<HuffmanTree> queueOfSymbols = createStackOfLeafNodesForAllSymbols(symbolWeights);
+        queueOfSymbols.sort(Comparator.comparingLong(HuffmanTree::getWeight));
+        LinkedList<HuffmanTree> queueOfSubTrees = createSubtrees(queueOfSymbols);
+        return mergeSubtrees(queueOfSubTrees);
+    }
 
+    private static LinkedList<HuffmanTree> createStackOfLeafNodesForAllSymbols(int[] symbolWeights) {
+        return IntStream.range(0, symbolWeights.length)
+                .mapToObj(i -> leafNode(i, symbolWeights[i]))
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    private static LinkedList<HuffmanTree> createSubtrees(LinkedList<HuffmanTree> symbols) {
         LinkedList<HuffmanTree> subTrees = new LinkedList<>();
         while (!symbols.isEmpty()) {
             HuffmanTree minimalSubtree1 = pollMinimal(symbols, subTrees);
             HuffmanTree minimalSubtree2 = pollMinimal(symbols, subTrees);
             subTrees.add(HuffmanTree.connect(minimalSubtree2, minimalSubtree1));
         }
+        return subTrees;
+    }
 
+    private static HuffmanTree mergeSubtrees(LinkedList<HuffmanTree> subTrees) {
         while (subTrees.size() > 1) {
             //noinspection ConstantConditions
             subTrees.add(HuffmanTree.connect(subTrees.poll(), subTrees.poll()));
