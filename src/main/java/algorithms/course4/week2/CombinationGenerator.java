@@ -1,4 +1,4 @@
-package algorithms.course1.course4.week2;
+package algorithms.course4.week2;
 
 import java.util.LinkedList;
 import java.util.List;

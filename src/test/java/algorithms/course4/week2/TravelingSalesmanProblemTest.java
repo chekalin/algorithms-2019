@@ -1,13 +1,13 @@
-package algorithms.course1.course4.week2;
+package algorithms.course4.week2;
 
-import algorithms.course1.course4.week2.TravelingSalesmanProblem.*;
+import algorithms.course4.week2.TravelingSalesmanProblem.*;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import static algorithms.course1.course4.week2.TravelingSalesmanProblem.*;
+import static algorithms.course4.week2.TravelingSalesmanProblem.*;
 import static algorithms.util.AssignmentInputReader.getScanner;
 import static org.assertj.core.api.Assertions.assertThat;
 

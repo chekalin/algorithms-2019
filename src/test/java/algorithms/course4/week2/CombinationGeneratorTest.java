@@ -1,9 +1,8 @@
-package algorithms.course1.course4.week2;
+package algorithms.course4.week2;
 
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class CombinationGeneratorTest {
 
