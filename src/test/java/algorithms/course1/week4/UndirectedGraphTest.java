@@ -155,9 +155,10 @@ class UndirectedGraphTest {
     }
 
     @Test
+    @Disabled("slow")
     void assignment() throws FileNotFoundException {
         UndirectedGraph graph = AssignmentInputReader.readGraph("course1/week4/week4_problem_set.txt", "\t");
-        int minCut = graph.findMinCut(100);
+        int minCut = graph.findMinCut(200);
         assertThat(minCut).isEqualTo(17);
     }
 }
