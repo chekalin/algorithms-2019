@@ -1,12 +1,16 @@
 package algorithms.course4.week2;
 
+import algorithms.course4.tsputil.Coordinate;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static algorithms.course4.tsputil.Coordinate.calculateDistance;
+
 class TravelingSalesmanProblem {
 
-    static double minimumCostTour(List<Vertex> vertices) {
+    static double minimumCostTour(List<Coordinate> vertices) {
         if (vertices.isEmpty()) throw new IllegalArgumentException("Empty list of vertices");
         int n = vertices.size();
         List<BitSet> combinations = generateAllCombinationsAsBitSets(n);
@@ -37,7 +41,7 @@ class TravelingSalesmanProblem {
         return solutions;
     }
 
-    private static void calculateAllShortestPaths(List<Vertex> vertices, List<BitSet> combinations, Map<BitSet, double[]> solutions) {
+    private static void calculateAllShortestPaths(List<Coordinate> vertices, List<BitSet> combinations, Map<BitSet, double[]> solutions) {
         IntStream.range(1, vertices.size() + 1).forEach(m ->
                 combinations.stream()
                         .filter(combination -> combination.cardinality() == m)
@@ -58,7 +62,7 @@ class TravelingSalesmanProblem {
                         }));
     }
 
-    private static double findShortestLoop(List<Vertex> vertices, double[] solutionsForAllVertices) {
+    private static double findShortestLoop(List<Coordinate> vertices, double[] solutionsForAllVertices) {
         return IntStream.range(1, vertices.size())
                 .mapToDouble(j -> solutionsForAllVertices[j] + calculateDistance(vertices.get(0), vertices.get(j)))
                 .min()
@@ -79,33 +83,11 @@ class TravelingSalesmanProblem {
         return result;
     }
 
-    static double calculateDistance(Vertex v1, Vertex v2) {
-        return Math.sqrt(Math.pow(v1.x - v2.x, 2) + Math.pow(v1.y - v2.y, 2));
-    }
-
     static BitSet toBitSet(int[] ints) {
         BitSet bitSet = new BitSet();
         for (int anInt : ints) {
             bitSet.set(anInt);
         }
         return bitSet;
-    }
-
-    static class Vertex {
-        private double x;
-        private double y;
-
-        Vertex(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public String toString() {
-            return "Vertex{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
-        }
     }
 }
