@@ -56,7 +56,7 @@ public class StronglyConnectedComponents {
             return reversed;
         }
 
-        Set<Set<String>> getStronglyConnectedComponents() {
+        public Set<Set<String>> getStronglyConnectedComponents() {
             DirectedGraph reversed = this.reversed();
             Map<String, Integer> orders = reversed.topologicalSort();
             List<String> sortedEdges = edges.keySet().stream().sorted(Comparator.comparing(orders::get)).collect(Collectors.toList());
