@@ -13,10 +13,6 @@ class SortedMerge {
         int curA = a.length - b.length - 1;
         int curB = b.length - 1;
         for(int i = a.length - 1; i >= 0; i--) {
-            System.out.println("a = " + Arrays.toString(a));
-            System.out.println("b = " + Arrays.toString(b));
-            System.out.println("curA = " + curA);
-            System.out.println("curB = " + curB);
             if(curB < 0) {
                 break;
             } else if(curA < 0) {
@@ -26,8 +22,6 @@ class SortedMerge {
             } else {
                 a[i] = b[curB--];
             }
-            System.out.println("a = " + Arrays.toString(a));
-            System.out.println();
         }
     }
 
