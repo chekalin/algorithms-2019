@@ -14,14 +14,14 @@ public class SortedSearchNoSize {
         int left = 0;
         int right = Integer.MAX_VALUE;
         while (left <= right) {
-            int median = left + (right - left) / 2;
-            int value = listy.get(median);
+            int middle = left + (right - left) / 2;
+            int value = listy.get(middle);
             if (value == target) {
-                return median;
+                return middle;
             } else if (value > target || value == -1) {
-                right = median - 1;
+                right = middle - 1;
             } else {
-                left = median + 1;
+                left = middle + 1;
             }
         }
         return -1;

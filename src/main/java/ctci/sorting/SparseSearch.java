@@ -10,27 +10,27 @@ public class SparseSearch {
         int left = 0;
         int right = input.length - 1;
         while (left <= right) {
-            int median = left + (right - left) / 2;
+            int middle = left + (right - left) / 2;
 
             int i = 1;
-            while (input[median].isEmpty() && (median - i >= left || median + i < right)) {
-                if (median - i >= left && !input[median - i].isEmpty()) {
-                    median = median - i;
-                } else if (median + i < right && !input[median + i].isEmpty()) {
-                    median = median + i;
+            while (input[middle].isEmpty() && (middle - i >= left || middle + i < right)) {
+                if (middle - i >= left && !input[middle - i].isEmpty()) {
+                    middle = middle - i;
+                } else if (middle + i < right && !input[middle + i].isEmpty()) {
+                    middle = middle + i;
                 }
                 i++;
             }
-            if (input[median].isEmpty()) {
+            if (input[middle].isEmpty()) {
                 return -1;
             }
 
-            if (input[median].equals(target)) {
-                return median;
-            } else if (input[median].compareTo(target) < 0) {
-                left = median + 1;
+            if (input[middle].equals(target)) {
+                return middle;
+            } else if (input[middle].compareTo(target) < 0) {
+                left = middle + 1;
             } else {
-                right = median - 1;
+                right = middle - 1;
             }
 
         }

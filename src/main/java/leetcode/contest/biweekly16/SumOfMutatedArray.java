@@ -10,17 +10,17 @@ class SumOfMutatedArray {
         int minDelta = Integer.MAX_VALUE;
         int bestGuess = currentMax;
         while (currentMin <= currentMax) {
-            int median = currentMin + (currentMax - currentMin) / 2;
-            int sumWithReplacement = sumWithReplacement(arr, median);
+            int middle = currentMin + (currentMax - currentMin) / 2;
+            int sumWithReplacement = sumWithReplacement(arr, middle);
             int currentDelta = Math.abs(sumWithReplacement - target);
-            if (currentDelta < minDelta || (currentDelta == minDelta && bestGuess > median)) {
+            if (currentDelta < minDelta || (currentDelta == minDelta && bestGuess > middle)) {
                 minDelta = currentDelta;
-                bestGuess = median;
+                bestGuess = middle;
             }
             if (sumWithReplacement > target) {
-                currentMax = median - 1;
+                currentMax = middle - 1;
             } else {
-                currentMin = median + 1;
+                currentMin = middle + 1;
             }
         }
         return bestGuess;

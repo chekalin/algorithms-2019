@@ -14,14 +14,14 @@ public class SearchInRotatedArray {
         int left = 0;
         int right = array.length - 1;
         while (left <= right) {
-            int median = left + (right - left) / 2;
-            int medianWithPivot = (median + pivot) % array.length;
-            if (array[medianWithPivot] == target) {
-                return medianWithPivot;
-            } else if (array[medianWithPivot] > target) {
-                right = median - 1;
+            int middle = left + (right - left) / 2;
+            int middleWithPivot = (middle + pivot) % array.length;
+            if (array[middleWithPivot] == target) {
+                return middleWithPivot;
+            } else if (array[middleWithPivot] > target) {
+                right = middle - 1;
             } else {
-                left = median + 1;
+                left = middle + 1;
             }
         }
         return -1;
@@ -31,11 +31,11 @@ public class SearchInRotatedArray {
         int left = 0;
         int right = array.length - 1;
         while (left < right) {
-            int median = left + (right - left) / 2;
-            if (array[median] > array[0]) {
-                left = median + 1;
+            int middle = left + (right - left) / 2;
+            if (array[middle] > array[0]) {
+                left = middle + 1;
             } else {
-                right = median - 1;
+                right = middle - 1;
             }
         }
         return left + 1;
